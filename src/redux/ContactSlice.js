@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import persistReducer from 'redux-persist/es/persistReducer';
 import storage from 'redux-persist/lib/storage';
 import { createAction } from '@reduxjs/toolkit';
-import { FetchContacts, addContact, deleteContact } from './ApiHandler';
+import { FetchContacts, addContact, deleteContact } from '../services/ApiHandler';
 
 export const checkContactExistence = createAction('contacts/checkExistence');
 
