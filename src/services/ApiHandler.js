@@ -1,7 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+// import { useSelector } from 'react-redux';
 
-axios.defaults.baseURL = "https://connections-api.herokuapp.com/contacts/";
+axios.defaults.baseURL = "https://connections-api.herokuapp.com/";
 
 export const FetchContacts = createAsyncThunk('contacts/all',
 async(_, thunkAPI) => {
@@ -13,7 +14,13 @@ async(_, thunkAPI) => {
     catch (error) {
         return thunkAPI.rejectWithValue(error.massage)
     }
-}
+}, {condition: (_, thunkAPI) => {
+    const logined = thunkAPI.getState().auth.authentification;
+
+    if(!logined) return true;
+    return false;
+
+}}
 );
 
 export const addContact = createAsyncThunk('contacts/newContact',
