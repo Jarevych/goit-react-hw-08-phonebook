@@ -26,7 +26,15 @@ async(_, thunkAPI) => {
 export const addContact = createAsyncThunk('contacts/newContact',
 async(newContact, thunkAPI) => {
     try{
-        const response = await axios.post('/contacts', newContact)
+        const state = thunkAPI.getState();
+        const token = state.auth.token;
+        if(!token) {
+            return thunkAPI.rejectWithValue("Token is missing")
+        };
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        }
+        const response = await axios.post('/contacts', newContact, {headers})
         console.log(response)
         return response.data;
     }
@@ -39,7 +47,15 @@ async(newContact, thunkAPI) => {
 export const deleteContact = createAsyncThunk('contacts/deleteContact',
 async(contactId, thunkAPI) => {
     try{
-        const response = await axios.delete(`/contacts/${contactId}`)
+        const state = thunkAPI.getState();
+        const token = state.auth.token;
+        if(!token) {
+            return thunkAPI.rejectWithValue("Token is missing")
+        };
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        }
+        const response = await axios.delete(`/contacts/${contactId}`, {headers})
         console.log(response.data)
         return response.data;
     }

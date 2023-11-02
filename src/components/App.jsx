@@ -1,36 +1,29 @@
+import { useDispatch } from 'react-redux';
 import '../styles.css';
-import ContactList from './ContactList';
-import FormInput from './Form';
-import Filter from './Filter';
-import Registration from 'pages/RegistrationPage';
-import { useSelector } from 'react-redux';
-import Login from 'pages/LoginPage';
+// import ContactList from './ContactList';
+// import FormInput from './Form';
+// import Filter from './Filter';
+// import Registration from 'pages/RegistrationPage';
+// import { useSelector } from 'react-redux';
+// import Login from 'pages/LoginPage';
+import Contacts from 'pages/Contacts';
+import { useEffect } from 'react';
+import { refreshThunk } from 'redux/AuthReducer';
 
 export function App() {
-  const logined = useSelector(state => state.auth.authentification);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(refreshThunk())
+  }, [dispatch])
 
   return (
     <div className="app-container">
-      {!logined && (
-        <div>
-          <Registration />
-          <Login />
-        </div>
-      )}
-
-      {logined ? (
-        <div>
-          <h2 className="app-title">Phonebook</h2>
-          <FormInput />
-          <h2 className="contacts-title">Contacts</h2>
-          <Filter />
+      
           <div>
-            <ContactList />
+            <Contacts />
           </div>
-        </div>
-      ) : (
-        <p>Please login or register</p>
-      )}
+       
     </div>
   );
 }

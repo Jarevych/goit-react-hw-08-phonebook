@@ -5,9 +5,8 @@ const phonebookInstance = axios.create({
 });
 
 export const setToken = token => {
-    phonebookInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
-  };
-  
+  phonebookInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
+};
 export const requestReg = async formData => {
   const { data } = await phonebookInstance.post('users/signup', formData);
   setToken(data.token);
@@ -19,6 +18,10 @@ export const requestLogin = async formData => {
   return data;
 };
 export const requestLogout = async formData => {
-  const { data } = await phonebookInstance.post('users/signout', formData);
+  const { data } = await phonebookInstance.post('users/logout', formData);
+  return data;
+};
+export const refreshUser = async () => {
+  const { data } = await phonebookInstance.get('users/current');
   return data;
 };

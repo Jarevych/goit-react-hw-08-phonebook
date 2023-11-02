@@ -31,7 +31,7 @@ export default function Registration() {
       </label>
       <label>
         <span>Password</span>
-        <input {...register('password',{ required: true, minLength: 7 })} />
+        <input {...register('password',{ required: true, minLength: 7 })} type='password'/>
         {errors.password && <span>This field is required</span>}
       </label>
 

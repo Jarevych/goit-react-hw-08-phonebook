@@ -1,6 +1,12 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
 
-import { requestReg, requestLogin, requestLogout } from '../services/AuthApi';
+import {
+  requestReg,
+  requestLogin,
+  requestLogout,
+  setToken,
+  refreshUser,
+} from '../services/AuthApi';
 
 export const regThunk = createAsyncThunk(
   'auth/register',
@@ -29,16 +35,37 @@ export const loginThunk = createAsyncThunk(
 );
 
 export const logoutThunk = createAsyncThunk(
-  'auth/register',
+  'auth/logout',
   async (_, thunkAPI) => {
     try {
-      const authData = await requestLogout();
-      console.log(authData);
-      return authData;
+      await requestLogout();
+      return;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.massage);
     }
   }
+);
+export const refreshThunk = createAsyncThunk(
+  'auth/refresh',
+  async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const token = state.auth.token;
+    try {
+      setToken(token);
+      const auth = await refreshUser();
+      return auth;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.massage);
+    }
+  },  {
+    condition: (_, thunkAPI) => {
+      const state = thunkAPI.getState();
+      const token = state.auth.token;
+
+      if (!token) return false;
+      return true;
+    },
+}
 );
 
 const INITIAL_STATE = {
@@ -57,24 +84,11 @@ const authSlice = createSlice({
   initialState: INITIAL_STATE,
   extraReducers: builder =>
     builder
-      .addCase(regThunk.pending, state => {
-        state.isLoading = false;
-        state.error = null;
-      })
       .addCase(regThunk.fulfilled, (state, action) => {
         state.authentification = true;
         state.token = action.payload.token;
         state.isLoading = false;
         state.user = action.payload.user;
-      })
-      .addCase(regThunk.rejected, (state, action) => {
-        state.isLoading = false;
-        state.error = action.payload;
-      })
-
-      .addCase(loginThunk.pending, state => {
-        state.isLoading = false;
-        state.error = null;
       })
 
       .addCase(loginThunk.fulfilled, (state, action) => {
@@ -83,10 +97,40 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
       })
-      .addCase(loginThunk.rejected, (state, action) => {
+      .addCase(refreshThunk.fulfilled, (state, action) => {
+        state.authentification = true;
+        state.token = action.payload.token;
         state.isLoading = false;
-        state.error = action.payload;
-      }),
+        state.user = action.payload.user;
+      })
+      .addCase(logoutThunk.fulfilled, () => {
+        return INITIAL_STATE;
+      })
+      .addMatcher(
+        isAnyOf(
+          logoutThunk.pending,
+          loginThunk.pending,
+          regThunk.pending,
+          refreshThunk.pending
+        ),
+        state => {
+          state.isLoading = false;
+          state.error = null;
+        }
+      )
+
+      .addMatcher(
+        isAnyOf(
+          logoutThunk.rejected,
+          loginThunk.rejected,
+          regThunk.rejected,
+          refreshThunk.rejected
+        ),
+        (state, action) => {
+          state.isLoading = false;
+          state.error = action.payload;
+        }
+      ),
 });
 
 export const authReducer = authSlice.reducer;
