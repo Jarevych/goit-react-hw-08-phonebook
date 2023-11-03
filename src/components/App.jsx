@@ -9,6 +9,7 @@ import '../styles.css';
 import Contacts from 'pages/Contacts';
 import { useEffect } from 'react';
 import { refreshThunk } from 'redux/AuthReducer';
+// import { FetchContacts } from 'services/ApiHandler';
 
 export function App() {
   const dispatch = useDispatch();
