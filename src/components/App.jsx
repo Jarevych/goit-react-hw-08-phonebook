@@ -16,7 +16,7 @@ import { refreshThunk } from 'redux/AuthReducer';
 import Navigation from './Navigation';
 import LoginPage from '../pages/LoginPage';
 import Registration from '../pages/RegistrationPage';
-import PublicRoute from './PublicRoute';
+import RestrictedRoute from './RestrictedRoute';
 import PrivateRoute from './PrivateRoute';
 // import { FetchContacts } from 'services/ApiHandler';
 
@@ -27,8 +27,8 @@ export function App() {
     dispatch(refreshThunk());
   }, [dispatch]);
   const appRoutes = [
-    {path: '/login', element: ( <PublicRoute><LoginPage/></PublicRoute> )},
-    {path: '/registration', element: ( <PublicRoute><Registration/></PublicRoute> ) },
+    {path: '/login', element: ( <RestrictedRoute><LoginPage/></RestrictedRoute> )},
+    {path: '/registration', element: ( <RestrictedRoute><Registration/></RestrictedRoute> ) },
     {path: '/contacts', element: ( <PrivateRoute><Contacts/></PrivateRoute> ) },
 
   ]

@@ -6,14 +6,14 @@ import { useDispatch } from 'react-redux';
 import { logoutThunk } from 'redux/AuthReducer';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { FetchContacts } from 'services/ApiHandler';
+import { fetchContacts } from 'redux/ContactsReducer';
 
 export default function Contacts() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   // const logined = useSelector(state => state.auth.authentification);
   useEffect(() => {
-    dispatch(FetchContacts());
+    dispatch(fetchContacts());
   }, [dispatch]);
 
   const logOut = () => {

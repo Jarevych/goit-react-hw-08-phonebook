@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FetchContacts, deleteContact } from 'services/ApiHandler';
+import { FetchContacts, deleteContact } from 'temp/ApiHandler';
 import { ProgressBar } from 'react-loader-spinner';
 
 const ContactList = () => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import InputName from './InputName';
 import InputNumber from './InputNumber';
 import { useDispatch, useSelector } from 'react-redux';
-import { FetchContacts, addContact } from 'services/ApiHandler';
+import { FetchContacts, addContact } from 'temp/ApiHandler';
 import { nanoid } from 'nanoid';
 
 

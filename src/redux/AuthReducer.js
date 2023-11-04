@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { FetchContacts } from 'services/ApiHandler';
+import { fetchContacts } from 'temp/ApiHandler';
 
 import {
   requestReg,
@@ -28,7 +28,7 @@ export const loginThunk = createAsyncThunk(
     try {
       const authData = await requestLogin(formData);
       console.log(authData);
-      FetchContacts();
+      fetchContacts();
 
       return authData;
     } catch (error) {
@@ -102,7 +102,6 @@ const authSlice = createSlice({
       })
       .addCase(refreshThunk.fulfilled, (state, action) => {
         state.authentification = true;
-        // state.token = action.payload.token;
         state.isLoading = false;
         state.user = action.payload.user;
       })
