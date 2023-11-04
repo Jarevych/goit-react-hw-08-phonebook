@@ -2,41 +2,50 @@ import '../styles.css';
 import ContactList from '../components/ContactList';
 import FormInput from '../components/Form';
 import Filter from '../components/Filter';
-import Registration from 'pages/RegistrationPage';
-import { useDispatch, useSelector } from 'react-redux';
-import Login from 'pages/LoginPage';
+import { useDispatch } from 'react-redux';
 import { logoutThunk } from 'redux/AuthReducer';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { FetchContacts } from 'services/ApiHandler';
 
 export default function Contacts() {
-    const dispatch = useDispatch();
-    const logined = useSelector(state => state.auth.authentification);
-    const logOut = () => {
-        dispatch(logoutThunk())
-    }
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  // const logined = useSelector(state => state.auth.authentification);
+  useEffect(() => {
+    dispatch(FetchContacts());
+  }, [dispatch]);
+
+  const logOut = () => {
+    dispatch(logoutThunk());
+    navigate('/login');
+  };
   return (
     <div className="app-container">
-      {!logined && (
+      {/* {!logined && (
         <div>
           <Registration />
           <Login />
         </div>
-      )}
+      )} */}
 
-      {logined ? (
+      {/* {logined ? ( */}
+      <div>
+        <button type="button" onClick={logOut}>
+          Logout
+        </button>
+        <h2 className="app-title">Phonebook</h2>
+        <FormInput />
+        <h2 className="contacts-title">Contacts</h2>
+        <Filter />
         <div>
-            <button type='button' onClick={logOut}>Logout</button>
-          <h2 className="app-title">Phonebook</h2>
-          <FormInput />
-          <h2 className="contacts-title">Contacts</h2>
-          <Filter />
-          <div>
-            <ContactList />
-          </div>
+          <ContactList />
         </div>
+      </div>
 
-      ) : (
+      {/* ) : (
         <p>Please login or register</p>
-      )}
+      )} */}
     </div>
   );
 }

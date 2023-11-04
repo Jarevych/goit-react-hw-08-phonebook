@@ -2,9 +2,9 @@ import { useSelector } from "react-redux";
 import { Navigate } from 'react-router-dom';
 
 
-const PrivateRoute = ({children, redirectTo = '/contacts'}) => {
+const PublicRoute = ({children, redirectTo = '/login'}) => {
     const authentificated = useSelector(state => state.auth.authentification);
-    return authentificated ? children : <Navigate to={redirectTo} replace />
+    return authentificated ?  <Navigate to={redirectTo}/> : children; 
 }
 
-export default PrivateRoute;
+export default PublicRoute;

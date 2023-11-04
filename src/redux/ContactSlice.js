@@ -11,7 +11,7 @@ import {
 export const checkContactExistence = createAction('contacts/checkExistence');
 
 const INITIAL_STATE = {
-  contacts: [],
+  contacts: null,
   isLoading: false,
   error: null,
 };
