@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { loginThunk } from 'redux/AuthReducer';
 
-
 export default function LoginPage() {
   const {
     register,
@@ -18,7 +17,7 @@ export default function LoginPage() {
     dispatch(loginThunk(data));
     console.log(data);
     reset();
-    navigate('/contacts')
+    navigate('/contacts');
   };
 
   return (
@@ -39,5 +38,4 @@ export default function LoginPage() {
       </form>
     </div>
   );
-};
-
+}

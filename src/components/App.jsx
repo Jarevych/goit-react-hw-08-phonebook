@@ -1,15 +1,7 @@
 import { useDispatch } from 'react-redux';
 import '../styles.css';
 import { ProgressBar } from 'react-loader-spinner';
-
-// import ContactList from './ContactList';
-// import FormInput from './Form';
-// import Filter from './Filter';
 import { Route, Routes } from 'react-router-dom';
-
-// import Registration from 'pages/RegistrationPage';
-// import { useSelector } from 'react-redux';
-// import Login from 'pages/LoginPage';
 import Contacts from '../pages/Contacts';
 import { useEffect, Suspense } from 'react';
 import { refreshThunk } from 'redux/AuthReducer';
@@ -18,7 +10,6 @@ import LoginPage from '../pages/LoginPage';
 import Registration from '../pages/RegistrationPage';
 import RestrictedRoute from './RestrictedRoute';
 import PrivateRoute from './PrivateRoute';
-// import { FetchContacts } from 'services/ApiHandler';
 
 export function App() {
   const dispatch = useDispatch();
@@ -27,11 +18,31 @@ export function App() {
     dispatch(refreshThunk());
   }, [dispatch]);
   const appRoutes = [
-    {path: '/login', element: ( <RestrictedRoute><LoginPage/></RestrictedRoute> )},
-    {path: '/registration', element: ( <RestrictedRoute><Registration/></RestrictedRoute> ) },
-    {path: '/contacts', element: ( <PrivateRoute><Contacts/></PrivateRoute> ) },
-
-  ]
+    {
+      path: '/login',
+      element: (
+        <RestrictedRoute>
+          <LoginPage />
+        </RestrictedRoute>
+      ),
+    },
+    {
+      path: '/registration',
+      element: (
+        <RestrictedRoute>
+          <Registration />
+        </RestrictedRoute>
+      ),
+    },
+    {
+      path: '/contacts',
+      element: (
+        <PrivateRoute>
+          <Contacts />
+        </PrivateRoute>
+      ),
+    },
+  ];
 
   return (
     <div className="app-container">
@@ -51,12 +62,12 @@ export function App() {
             </div>
           }
         >
-            <Navigation/>
-              <Routes>
-                {appRoutes.map(({ path, element}) => (
-                  <Route key={path} path={path} element={element} />
-                ))}
-              </Routes>
+          <Navigation />
+          <Routes>
+            {appRoutes.map(({ path, element }) => (
+              <Route key={path} path={path} element={element} />
+            ))}
+          </Routes>
         </Suspense>
       </div>
     </div>

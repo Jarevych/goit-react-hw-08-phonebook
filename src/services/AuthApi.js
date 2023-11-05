@@ -27,16 +27,13 @@ export const refreshUser = async () => {
 };
 export const allContacts = async () => {
   const { data } = await phonebookInstance.get('/contacts');
-  setToken(data.token);
   return data;
 };
 export const addContact = async newContact => {
   const { data } = await phonebookInstance.post('/contacts', newContact);
-  // setToken(data.token);
   return data;
 };
 export const delContact = async contactId => {
   const { data } = await phonebookInstance.delete(`/contacts/${contactId}`);
-  // setToken(data.token);
   return data;
 };

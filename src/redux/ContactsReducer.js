@@ -12,7 +12,7 @@ export const fetchContacts = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const response = await allContacts();
-      console.log(response.data)
+      console.log(response)
       return response;
 
     } catch (error) {
@@ -20,7 +20,6 @@ export const fetchContacts = createAsyncThunk(
     }
   }
 );
-    
 
 export const addNewContact = createAsyncThunk(
   'contacts/add',
@@ -33,6 +32,7 @@ export const addNewContact = createAsyncThunk(
     }
   }
 );
+
 export const deleteContact = createAsyncThunk(
   'contacts/delete',
   async (contactId, thunkAPI) => {
@@ -45,10 +45,8 @@ export const deleteContact = createAsyncThunk(
   }
 );
 
-// export const checkContactExistence = createAction('contacts/checkExistence');
-
 const INITIAL_STATE = {
-  contacts: [],
+  contacts: null,
   isLoading: false,
   error: null,
 };
@@ -74,7 +72,7 @@ const contactSlice = createSlice({
       .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.contacts = state.contacts.filter(
-          contact => contact.id !== action.payload.id,
+          contact => contact.id !== action.payload.id
         );
       })
       .addMatcher(
@@ -98,14 +96,5 @@ const contactSlice = createSlice({
   },
 });
 
-// const persistConfig = {
-//   key: 'contacts',
-//   whitelist: ['contacts'],
-// };
-// export const persistedReducer = persistReducer(
-//   persistConfig,
-//   contactSlice.reducer
-// );
-// export const { addNewContact, deleteContact } = contactSlice.actions;
 export const contactReducer = contactSlice.reducer;
 export const { checkExistence } = contactSlice.actions;

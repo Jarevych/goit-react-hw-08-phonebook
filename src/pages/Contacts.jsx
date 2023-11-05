@@ -11,7 +11,6 @@ import { fetchContacts } from 'redux/ContactsReducer';
 export default function Contacts() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const logined = useSelector(state => state.auth.authentification);
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
@@ -22,14 +21,6 @@ export default function Contacts() {
   };
   return (
     <div className="app-container">
-      {/* {!logined && (
-        <div>
-          <Registration />
-          <Login />
-        </div>
-      )} */}
-
-      {/* {logined ? ( */}
       <div>
         <button type="button" onClick={logOut}>
           Logout
@@ -42,10 +33,6 @@ export default function Contacts() {
           <ContactList />
         </div>
       </div>
-
-      {/* ) : (
-        <p>Please login or register</p>
-      )} */}
     </div>
   );
 }

@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
-// import { fetchContacts } from 'temp/ApiHandler';
 
 import {
   requestReg,
@@ -14,7 +13,6 @@ export const regThunk = createAsyncThunk(
   async (formData, thunkAPI) => {
     try {
       const authData = await requestReg(formData);
-      console.log(authData);
       return authData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.massage);
@@ -27,9 +25,6 @@ export const loginThunk = createAsyncThunk(
   async (formData, thunkAPI) => {
     try {
       const authData = await requestLogin(formData);
-      console.log(authData);
-      // fetchContacts();
-
       return authData;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.massage);

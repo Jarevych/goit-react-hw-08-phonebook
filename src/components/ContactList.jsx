@@ -1,4 +1,3 @@
-// import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts, deleteContact } from 'redux/ContactsReducer';
 import { ProgressBar } from 'react-loader-spinner';
@@ -8,9 +7,6 @@ const ContactList = () => {
   const isLoading = useSelector(state => state.isLoading);
   const contacts = useSelector(state => state.contacts.contacts);
   const filter = useSelector(state => state.filter.filter);
-  // useEffect(() => {
-  //   dispatch(fetchContacts());
-  // }, [dispatch]);
 
   const handleDeleteContact = contactId => {
     dispatch(deleteContact(contactId)).then(() => {
