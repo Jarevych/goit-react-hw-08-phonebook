@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import InputName from './InputName';
 import InputNumber from './InputNumber';
 import { useDispatch, useSelector } from 'react-redux';
-import { FetchContacts, addContact } from 'temp/ApiHandler';
+import { fetchContacts, addNewContact } from '../redux/ContactsReducer';
 import { nanoid } from 'nanoid';
 
 
@@ -24,8 +24,8 @@ export default function FormInput() {
           return;
         }
 
-      dispatch(addContact(newContact)).then(()=>{
-        dispatch(FetchContacts());
+      dispatch(addNewContact(newContact)).then(()=>{
+        dispatch(fetchContacts());
       });
     setName('');
     setNumber('');

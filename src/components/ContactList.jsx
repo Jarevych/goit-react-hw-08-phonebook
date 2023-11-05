@@ -1,20 +1,20 @@
-import { useEffect } from 'react';
+// import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FetchContacts, deleteContact } from 'temp/ApiHandler';
+import { fetchContacts, deleteContact } from 'redux/ContactsReducer';
 import { ProgressBar } from 'react-loader-spinner';
 
 const ContactList = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(state => state.contacts.isLoading);
+  const isLoading = useSelector(state => state.isLoading);
   const contacts = useSelector(state => state.contacts.contacts);
   const filter = useSelector(state => state.filter.filter);
-  useEffect(() => {
-    dispatch(FetchContacts());
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch(fetchContacts());
+  // }, [dispatch]);
 
   const handleDeleteContact = contactId => {
     dispatch(deleteContact(contactId)).then(() => {
-      dispatch(FetchContacts());
+      dispatch(fetchContacts());
     });
   };
   const contactsArr = Array.isArray(contacts) ? contacts : [];

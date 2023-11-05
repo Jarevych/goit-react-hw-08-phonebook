@@ -5,7 +5,7 @@ import {
   addContact,
   delContact,
   //   setToken,
-} from '../services/ContactsApi';
+} from '../services/AuthApi';
 
 export const fetchContacts = createAsyncThunk(
   'contacts/all',
@@ -24,8 +24,8 @@ export const fetchContacts = createAsyncThunk(
         if(!logined) return true;
         return false;
     
-    }}
-    );
+    }
+});
     
 
 export const addNewContact = createAsyncThunk(
@@ -39,7 +39,7 @@ export const addNewContact = createAsyncThunk(
     }
   }
 );
-export const deleteContacts = createAsyncThunk(
+export const deleteContact = createAsyncThunk(
   'contacts/delete',
   async (contactId, thunkAPI) => {
     try {
@@ -54,7 +54,7 @@ export const deleteContacts = createAsyncThunk(
 // export const checkContactExistence = createAction('contacts/checkExistence');
 
 const INITIAL_STATE = {
-  contacts: null,
+  contacts: [],
   isLoading: false,
   error: null,
 };
@@ -77,10 +77,10 @@ const contactSlice = createSlice({
           state.contacts = [action.payload];
         }
       })
-      .addCase(deleteContacts.fulfilled, (state, action) => {
+      .addCase(deleteContact.fulfilled, (state, action) => {
         state.isLoading = false;
         state.contacts = state.contacts.filter(
-          contact => contact.id !== action.payload.id
+          contact => contact.id !== action.payload.id,
         );
       })
       .addMatcher(
@@ -94,7 +94,7 @@ const contactSlice = createSlice({
         isAnyOf(
           fetchContacts.rejected,
           addNewContact.rejected,
-          deleteContacts.rejected
+          deleteContact.rejected
         ),
         (state, action) => {
           state.isLoading = false;

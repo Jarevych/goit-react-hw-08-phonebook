@@ -7,24 +7,7 @@ const phonebookInstance = axios.create({
 export const setToken = token => {
   phonebookInstance.defaults.headers.common.Authorization = `Bearer ${token}`;
 };
-export const requestReg = async formData => {
-  const { data } = await phonebookInstance.post('users/signup', formData);
-  setToken(data.token);
-  return data;
-};
-export const requestLogin = async formData => {
-  const { data } = await phonebookInstance.post('users/login', formData);
-  setToken(data.token);
-  return data;
-};
-export const requestLogout = async formData => {
-  const { data } = await phonebookInstance.post('users/logout', formData);
-  return data;
-};
-export const refreshUser = async () => {
-  const { data } = await phonebookInstance.get('users/current');
-  return data;
-};
+
 export const allContacts = async () => {
   const { data } = await phonebookInstance.get('/contacts');
   setToken(data.token);
@@ -37,6 +20,5 @@ export const addContact = async newContact => {
 };
 export const delContact = async contactId => {
   const { data } = await phonebookInstance.delete(`/contacts/${contactId}`);
-  setToken(data.token);
   return data;
 };
