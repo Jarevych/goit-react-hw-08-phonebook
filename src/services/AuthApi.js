@@ -17,7 +17,7 @@ export const requestLogin = async formData => {
   setToken(data.token);
   return data;
 };
-export const requestLogout = async formData => {
+export const requestLogout = async () => {
   const { data } = await phonebookInstance.post('users/logout');
   return data;
 };
@@ -32,11 +32,11 @@ export const allContacts = async () => {
 };
 export const addContact = async newContact => {
   const { data } = await phonebookInstance.post('/contacts', newContact);
-  setToken(data.token);
+  // setToken(data.token);
   return data;
 };
 export const delContact = async contactId => {
   const { data } = await phonebookInstance.delete(`/contacts/${contactId}`);
-  setToken(data.token);
+  // setToken(data.token);
   return data;
 };
