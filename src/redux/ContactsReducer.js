@@ -18,14 +18,8 @@ export const fetchContacts = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.massage);
     }
-  },{condition: (_, thunkAPI) => {
-        const logined = thunkAPI.getState().auth.authentification;
-    
-        if(!logined) return true;
-        return false;
-    
-    }
-});
+  }
+);
     
 
 export const addNewContact = createAsyncThunk(
