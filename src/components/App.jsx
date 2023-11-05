@@ -3,9 +3,9 @@ import '../styles.css';
 import { ProgressBar } from 'react-loader-spinner';
 import { Route, Routes } from 'react-router-dom';
 import Contacts from '../pages/Contacts';
-import { useEffect, Suspense } from 'react';
+import { useEffect, Suspense, useState } from 'react';
 import { refreshThunk } from 'redux/AuthReducer';
-import Navigation from './Navigation';
+import Navigation from './Navigation/Navigation';
 import LoginPage from '../pages/LoginPage';
 import Registration from '../pages/RegistrationPage';
 import RestrictedRoute from './RestrictedRoute';
@@ -13,10 +13,20 @@ import PrivateRoute from './PrivateRoute';
 
 export function App() {
   const dispatch = useDispatch();
+  const [userData, setUserData] = useState(null)
 
+  
+
+  
   useEffect(() => {
-    dispatch(refreshThunk());
+    dispatch(refreshThunk())
+    .then((responce) => {
+      setUserData(responce.payload.user)
+    }).catch((error) => {
+      console.error('Помилка оновлення даних користувача', error);
+    });
   }, [dispatch]);
+
   const appRoutes = [
     {
       path: '/login',
@@ -62,7 +72,7 @@ export function App() {
             </div>
           }
         >
-          <Navigation />
+          <Navigation user={userData}/>
           <Routes>
             {appRoutes.map(({ path, element }) => (
               <Route key={path} path={path} element={element} />

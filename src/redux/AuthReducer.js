@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, isAnyOf } from '@reduxjs/toolkit';
-
+import UserData from 'components/UserMenu';
 import {
   requestReg,
   requestLogin,
@@ -51,6 +51,8 @@ export const refreshThunk = createAsyncThunk(
     try {
       setToken(token);
       const auth = await refreshUser();
+      console.log(auth.name)
+     
       return auth;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.massage);

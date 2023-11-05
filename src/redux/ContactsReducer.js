@@ -4,8 +4,7 @@ import {
   allContacts,
   addContact,
   delContact,
-  //   setToken,
-} from '../services/AuthApi';
+} from '../services/ContactsApi';
 
 export const fetchContacts = createAsyncThunk(
   'contacts/all',
