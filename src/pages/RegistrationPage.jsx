@@ -18,7 +18,7 @@ export default function Registration() {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(onSubmit)} className='reg-form'>
       <label>
         <span>Email</span>
         <input {...register('email',{ required: true })}  type="email"/>
@@ -35,7 +35,7 @@ export default function Registration() {
         {errors.password && <span>This field is required</span>}
       </label>
 
-      <input type="submit" />
+      <button type='submit'>Надіслати</button>
     </form>
   );
 }

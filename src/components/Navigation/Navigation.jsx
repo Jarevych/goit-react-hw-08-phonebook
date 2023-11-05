@@ -4,8 +4,20 @@ import { StyledAppHeader, StyledNavLink } from './NavigationStyled';
 import { ProgressBar } from 'react-loader-spinner';
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
+import UserMenu from 'components/UserMenu';
+import { useDispatch } from 'react-redux';
+import { logoutThunk } from 'redux/AuthReducer';
+import { useNavigate } from 'react-router-dom';
+
 
 const Navigation = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    dispatch(logoutThunk());
+    navigate('/login');
+  };
   const logined = useSelector(state => state.auth.authentification);
   return (
     <StyledAppHeader>
@@ -29,7 +41,9 @@ const Navigation = () => {
             <>
               <StyledNavLink to="/contacts" end>
                 Contacts
-              </StyledNavLink>
+              </StyledNavLink>  
+              <UserMenu onClick={logOut}/>
+
             </>
           ) : (
             <>

@@ -100,7 +100,7 @@ const authSlice = createSlice({
       .addCase(refreshThunk.fulfilled, (state, action) => {
         state.authentification = true;
         state.isLoading = false;
-        state.user = action.payload.user;
+        state.user = action.payload;
       })
       .addCase(logoutThunk.fulfilled, () => {
         return INITIAL_STATE;
